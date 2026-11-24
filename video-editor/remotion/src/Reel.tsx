@@ -1,5 +1,5 @@
 import React, {useMemo} from 'react';
-import {AbsoluteFill, Audio, Easing, interpolate, Sequence, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
+import {AbsoluteFill, Audio, Easing, interpolate, OffthreadVideo, Sequence, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
 import {BeatCard, HookOverlay} from './components/BeatCard';
 import {Captions} from './components/Captions';
 import {FaceCam} from './components/FaceCam';
@@ -13,7 +13,7 @@ const RAMP = 0.3; // seconds for the face to shrink / grow
 const panelSpans = (beats: Beat[]) => {
   const spans: {start: number; end: number}[] = [];
   beats
-    .filter((b) => b.type !== 'hook')
+    .filter((b) => b.type !== 'hook' && !(b.type === 'scene' && b.area === 'full'))
     .sort((a, b) => a.start - b.start)
     .forEach((b) => {
       const last = spans[spans.length - 1];
@@ -22,6 +22,13 @@ const panelSpans = (beats: Beat[]) => {
     });
   return spans;
 };
+
+// Motion graphic rendered by HyperFrames with an alpha channel.
+const SceneVideo: React.FC<{src: string}> = ({src}) => (
+  <AbsoluteFill>
+    <OffthreadVideo src={staticFile(src)} transparent muted style={{width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'top'}} />
+  </AbsoluteFill>
+);
 
 const defaultSfx = (b: Beat, prev?: Beat) => {
   if (b.sfx !== undefined) return b.sfx;
@@ -73,9 +80,13 @@ export const Reel: React.FC<Plan> = (plan) => {
           .filter((b) => b.type !== 'hook')
           .map((b, i) => (
             <Sequence key={i} from={Math.round(b.start * fps)} durationInFrames={Math.max(1, Math.round((b.end - b.start) * fps))} layout="none">
-              <div style={{position: 'absolute', inset: 0, top: 130, bottom: 90}}>
-                <BeatCard beat={b} plan={plan} />
-              </div>
+              {b.type === 'scene' ? (
+                b.area !== 'full' && b.src ? <SceneVideo src={b.src} /> : null
+              ) : (
+                <div style={{position: 'absolute', inset: 0, top: 130, bottom: 90}}>
+                  <BeatCard beat={b} plan={plan} />
+                </div>
+              )}
             </Sequence>
           ))}
       </div>
@@ -105,6 +116,15 @@ export const Reel: React.FC<Plan> = (plan) => {
         .map((b, i) => (
           <Sequence key={`h${i}`} from={Math.round(b.start * fps)} durationInFrames={Math.max(1, Math.round((b.end - b.start) * fps))} layout="none">
             <HookOverlay beat={b} plan={plan} />
+          </Sequence>
+        ))}
+
+      {/* full-frame HyperFrames scenes, over the face */}
+      {beats
+        .filter((b) => b.type === 'scene' && b.area === 'full' && b.src)
+        .map((b, i) => (
+          <Sequence key={`f${i}`} from={Math.round(b.start * fps)} durationInFrames={Math.max(1, Math.round((b.end - b.start) * fps))} layout="none">
+            <SceneVideo src={b.src!} />
           </Sequence>
         ))}
 

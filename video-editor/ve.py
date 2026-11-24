@@ -5,6 +5,8 @@
     python ve.py script demo           # transcript with output-timeline timestamps
     (write projects/demo/edit.json: beats, highlight, theme ...)
     python ve.py build  demo           # merge edit.json + transcript -> props.json
+    python ve.py scene-new demo tools --area panel   # custom HyperFrames motion graphic
+    python ve.py scene demo            # render scenes -> transparent .webm (beat type "scene")
     python ve.py preview demo          # contact sheet of stills, for review
     python ve.py render demo           # -> projects/demo/out.mp4
 
@@ -25,6 +27,7 @@ ROOT = Path(__file__).resolve().parent
 REMOTION = ROOT / "remotion"
 PROJECTS = ROOT / "projects"
 THEMES = ROOT / "themes"
+HF = ROOT / "hyperframes"
 CHROME = Path("/opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell")
 
 
@@ -242,6 +245,42 @@ def cmd_build(a) -> None:
     print(f"props.json: {len(props['beats'])} beats, {len(words)} words, {props['durationInSeconds']:.1f}s, theme={props['theme']['name']}")
 
 
+# ---------------------------------------------------------------- HyperFrames scenes
+SCENE_SIZE = {"panel": (1080, 1036), "full": (1080, 1920)}
+
+
+def cmd_scene_new(a) -> None:
+    d = proj(a.name) / "scenes" / a.scene
+    if d.exists():
+        sys.exit(f"exists: {d}")
+    shutil.copytree(HF / "templates" / a.template, d)
+    w, h = SCENE_SIZE[a.area]
+    html = (d / "index.html").read_text()
+    html = html.replace("1036", str(h)).replace("1080", str(w))
+    (d / "index.html").write_text(html)
+    save(d / "scene.json", {"area": a.area})
+    print(f"scene: {d / 'index.html'}  ({w}x{h}, edit it, then: ve.py scene {a.name})")
+
+
+def cmd_scene(a) -> None:
+    root = proj(a.name) / "scenes"
+    fps = (load(proj(a.name) / "meta.json", {}) or {}).get("fps", 30)
+    names = [a.scene] if a.scene else sorted(p.name for p in root.iterdir() if (p / "index.html").exists())
+    env = {**__import__("os").environ, "HYPERFRAMES_BROWSER_PATH": str(CHROME)} if CHROME.exists() else None
+    for n in names:
+        d = root / n
+        assets = d / "assets"
+        if assets.exists():
+            shutil.rmtree(assets)
+        shutil.copytree(HF / "shared", assets)
+        out = public_dir(a.name) / "scenes" / f"{n}.webm"
+        out.parent.mkdir(parents=True, exist_ok=True)
+        hf = HF / "node_modules" / ".bin" / "hyperframes"
+        run([hf, "lint", d], env=env)
+        run([hf, "render", d, "--format", "webm", "--fps", str(fps), "-o", out, "--quiet"], env=env, stdout=subprocess.DEVNULL)
+        print(f"scene {n} -> {out.relative_to(REMOTION / 'public')}  (use as beat src)")
+
+
 # ---------------------------------------------------------------- preview / render
 def remotion(args: list) -> None:
     extra = ["--browser-executable", CHROME] if CHROME.exists() else []
@@ -316,6 +355,12 @@ def main() -> None:
     sp.add_argument("--noise", type=float, default=-35, help="silence threshold in dB")
     add("script", cmd_script)
     add("build", cmd_build)
+    sp = add("scene-new", cmd_scene_new)
+    sp.add_argument("scene")
+    sp.add_argument("--area", choices=["panel", "full"], default="panel")
+    sp.add_argument("--template", default="checklist")
+    sp = add("scene", cmd_scene)
+    sp.add_argument("scene", nargs="?")
     sp = add("preview", cmd_preview)
     sp.add_argument("--count", type=int, default=10)
     sp.add_argument("--at", help="comma-separated seconds")

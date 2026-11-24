@@ -1,6 +1,6 @@
 ---
 name: video-editor
-description: Edit a raw talking-head video the user sends into a finished reel — speech extraction, silence cuts, animated captions, motion-graphic cards, SFX, render — using the video-editor/ project (Python + Remotion). Use whenever the user uploads or links a video of themselves talking and asks to edit it, "make it a reel", "do the montage", or to apply a reel's style to it.
+description: Edit a raw talking-head video the user sends into a finished reel — speech extraction, silence cuts, animated captions, motion-graphic cards, custom HyperFrames motion graphics, SFX, render — using the video-editor/ project (Python + Remotion + HyperFrames). Use whenever the user uploads or links a video of themselves talking and asks to edit it, "make it a reel", "do the montage", or to apply a reel's style to it.
 ---
 
 # Video editor — the user talks, Claude edits
@@ -13,10 +13,11 @@ transcribe, cut, decide the edit, render, send back. Project: `video-editor/` at
 ```bash
 cd video-editor
 pip install torch --index-url https://download.pytorch.org/whl/cpu && pip install openai-whisper
-(cd remotion && npm install)
+(cd remotion && npm install) && (cd hyperframes && npm install)
 ```
 Needs network hosts `openaipublic.azureedge.net` (Whisper models) and `download.pytorch.org`.
-Rendering uses the preinstalled Chromium headless shell (`ve.py` passes `--browser-executable`).
+Rendering uses the preinstalled Chromium headless shell (`ve.py` passes it to Remotion with
+`--browser-executable` and to HyperFrames with `HYPERFRAMES_BROWSER_PATH`).
 
 ## 1. Ingest
 
@@ -72,6 +73,32 @@ Editing rules (copied from pro reels; break them only for a reason):
   (1.1–1.3 if the face is small in frame), `fps` 60 for smoother motion, `beat.sfx` to override or
   `null` to mute one beat. SFX by default: riser on hook, whoosh on new step, ding on stat/cta, pop otherwise.
 
+## 2b. Custom motion graphics with HyperFrames (for the big moments)
+
+Template cards cover most beats. For the 1–3 moments that carry the video (the key list, a
+diagram, a reveal), build a bespoke animated scene in HTML + GSAP with HyperFrames (HeyGen,
+open source). It renders with an alpha channel, and Remotion composites it.
+
+```bash
+python3 ve.py scene-new <slug> tools --area panel   # projects/<slug>/scenes/tools/index.html (1080x1036)
+#   ...edit index.html: content, timings, theme colours...
+python3 ve.py scene <slug>                          # lint + render -> public/projects/<slug>/scenes/tools.webm
+```
+Then add a beat: `{"start": 14.1, "end": 20.1, "type": "scene", "src": "projects/<slug>/scenes/tools.webm", "step": 1}`.
+- `--area panel` fills the lower panel under the face (keep the top 140 px free for the STEP bar).
+  `--area full` is 1080×1920 over the face, for transitions, big reveals or a faceless intro.
+- Contract: root `data-composition-id="main"` with `data-duration` equal to the beat length.
+  Every timed element needs `data-start` and `data-duration`. Register one paused GSAP timeline on
+  `window.__timelines["main"]`. Logic must be deterministic: no `Math.random`, no `Date.now`, no network.
+- Assets are offline: GSAP and the fonts (Cairo, Inter, Instrument Serif, JetBrains Mono) are in
+  `assets/`, copied from `hyperframes/shared/` at render time. Don't use CDN links; they're blocked.
+- Template: `hyperframes/templates/checklist` (title + rows that check off one by one with a
+  counter). Copy the theme colours from the reel's theme into its `:root` variables.
+- Motion vocabulary: blur 8→0 + y 30→0 in 0.35 s `power4.out` for entries, `back.out(3)`
+  for checks and pops, an accent glow on the active item, stagger about 0.5 s matched to speech.
+- Look before rendering: `hyperframes/node_modules/.bin/hyperframes snapshot <scene-dir> --at 1,3,5`.
+- Reference analysis: `hyperframes measure <video>` measures cuts, eases and motion of a reel you want to copy.
+
 ## 3. Style
 
 `theme` is a file name from `video-editor/themes/` (`terracotta-dark`, `clean-light`, `neon-bold`) or
@@ -99,4 +126,5 @@ theme and re-render; touch the React components only for a new kind of visual.
 - `ve.py`: pipeline CLI (new / transcribe / cut / script / build / preview / render)
 - `remotion/src/Reel.tsx`: layout (face full ↔ split with panel), captions, step bar, SFX, music
 - `remotion/src/components/BeatCard.tsx`: card types; add new types here and in `types.ts`
+- `hyperframes/templates/`: HyperFrames scene templates; `hyperframes/shared/`: offline GSAP + fonts
 - `projects/<slug>/`: per-video work files (gitignored); the video copy lives in `remotion/public/projects/<slug>/`

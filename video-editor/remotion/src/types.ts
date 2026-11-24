@@ -9,7 +9,7 @@ export type Segment = {
   to: number;
 };
 
-export type BeatType = 'hook' | 'title' | 'list' | 'stat' | 'quote' | 'compare' | 'cta';
+export type BeatType = 'hook' | 'title' | 'list' | 'stat' | 'quote' | 'compare' | 'cta' | 'scene';
 
 export type Beat = {
   start: number;
@@ -22,6 +22,8 @@ export type Beat = {
   items?: string[]; // list / compare (two items: left|right)
   value?: string; // stat
   sfx?: string | null; // override; null = silent
+  src?: string; // scene: transparent video rendered by HyperFrames, in public/
+  area?: 'panel' | 'full'; // scene: lower panel (1080x1036) or whole frame over the face
 };
 
 export type Theme = {

@@ -1,0 +1,70 @@
+{
+  "version": 1,
+  "historyId": "0c2463c0-7518-4609-a0ec-d0b770eac8e6",
+  "currentRevision": null,
+  "pendingChanges": false,
+  "files": {
+    "assets/fonts/cairo-arabic-700-normal.woff2": {
+      "hash": "09147def57e55e626f58b97b08590c19130477db1b44c6410e8b2eaa4497fd3d",
+      "content": "/root/.cache/hyperframes/history/0c2463c0-7518-4609-a0ec-d0b770eac8e6/blobs/09/09147def57e55e626f58b97b08590c19130477db1b44c6410e8b2eaa4497fd3d"
+    },
+    "assets/fonts/cairo-arabic-900-normal.woff2": {
+      "hash": "7b2c8098438580b8a316fae9b1444a128e0a00e868462a393285000e56a6e13f",
+      "content": "/root/.cache/hyperframes/history/0c2463c0-7518-4609-a0ec-d0b770eac8e6/blobs/7b/7b2c8098438580b8a316fae9b1444a128e0a00e868462a393285000e56a6e13f"
+    },
+    "assets/fonts/cairo-latin-900-normal.woff2": {
+      "hash": "b592cbd3146f76d70e35b1cb5807a0df441c83c29a5bc70d7b68c4269cc8444d",
+      "content": "/root/.cache/hyperframes/history/0c2463c0-7518-4609-a0ec-d0b770eac8e6/blobs/b5/b592cbd3146f76d70e35b1cb5807a0df441c83c29a5bc70d7b68c4269cc8444d"
+    },
+    "assets/fonts/instrument-serif-latin-400-italic.woff2": {
+      "hash": "1d6e1bd7bc12e2920ed13edb467b8a5ec4a344e6fb78eb9e302ad9ab00981b9c",
+      "content": "/root/.cache/hyperframes/history/0c2463c0-7518-4609-a0ec-d0b770eac8e6/blobs/1d/1d6e1bd7bc12e2920ed13edb467b8a5ec4a344e6fb78eb9e302ad9ab00981b9c"
+    },
+    "assets/fonts/inter-latin-700-normal.woff2": {
+      "hash": "aac638f7503cebb084ec494cf00f75f7d8260d50c2f4e7820bccabba09626a3a",
+      "content": "/root/.cache/hyperframes/history/0c2463c0-7518-4609-a0ec-d0b770eac8e6/blobs/aa/aac638f7503cebb084ec494cf00f75f7d8260d50c2f4e7820bccabba09626a3a"
+    },
+    "assets/fonts/inter-latin-900-normal.woff2": {
+      "hash": "08a195a0cb54f0aa04e00d7a57f175d8cad0923b62f99268d7279b4e982cb3e8",
+      "content": "/root/.cache/hyperframes/history/0c2463c0-7518-4609-a0ec-d0b770eac8e6/blobs/08/08a195a0cb54f0aa04e00d7a57f175d8cad0923b62f99268d7279b4e982cb3e8"
+    },
+    "assets/fonts/jetbrains-mono-latin-500-normal.woff2": {
+      "hash": "4765dee1c0be507cde85c3de952bb24707b798f0e4002c360b9434d66c8bbc3c",
+      "content": "/root/.cache/hyperframes/history/0c2463c0-7518-4609-a0ec-d0b770eac8e6/blobs/47/4765dee1c0be507cde85c3de952bb24707b798f0e4002c360b9434d66c8bbc3c"
+    },
+    "assets/gsap.min.js": {
+      "hash": "96c01b81f44a3290e2b4532f55e2c9534b2adc43273a19f3756b2cb41f0fd0b6",
+      "content": "/root/.cache/hyperframes/history/0c2463c0-7518-4609-a0ec-d0b770eac8e6/blobs/96/96c01b81f44a3290e2b4532f55e2c9534b2adc43273a19f3756b2cb41f0fd0b6"
+    },
+    "hyperframes.json": {
+      "hash": "66831c48c91635768e558047fcca422b5040aff01cb5c23b8f8150b698e6ce6e",
+      "content": "/root/.cache/hyperframes/history/0c2463c0-7518-4609-a0ec-d0b770eac8e6/blobs/66/66831c48c91635768e558047fcca422b5040aff01cb5c23b8f8150b698e6ce6e"
+    },
+    "index.html": {
+      "hash": "98c119ccb2c35889214162761d4efcda72c41f7eabbf04a46d4c8b1433e48afb",
+      "content": "/root/.cache/hyperframes/history/0c2463c0-7518-4609-a0ec-d0b770eac8e6/blobs/98/98c119ccb2c35889214162761d4efcda72c41f7eabbf04a46d4c8b1433e48afb"
+    }
+  },
+  "revisions": {},
+  "checks": {
+    "latest": null,
+    "revisions": {},
+    "unversioned": []
+  },
+  "snapshots": {
+    "latest": null,
+    "revisions": {},
+    "unversioned": []
+  },
+  "renders": {
+    "latest": {
+      "id": "96cee7d5-8ea6-48d5-9208-ddb84ef69b21",
+      "completedAt": 1795522828736,
+      "output": "/home/user/Agent-Reach/video-editor/hyperframes/scenes/tools-checklist/out.webm",
+      "status": "completed",
+      "revision": null
+    },
+    "retainedRevisions": []
+  },
+  "pendingArtifactCleanup": []
+}
