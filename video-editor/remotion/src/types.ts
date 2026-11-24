@@ -65,4 +65,6 @@ export type Plan = {
   musicVolume: number;
   sfxVolume: number;
   faceZoom: number; // 1 = no crop zoom
+  facePos?: string; // CSS object-position of the face cam, e.g. '50% 25%' keeps a high face in frame
+  cardRtl?: boolean; // lay out cards right-to-left (Arabic card text)
 };

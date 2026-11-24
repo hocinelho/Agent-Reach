@@ -31,6 +31,8 @@ export const FaceCam: React.FC<{plan: Plan; style: React.CSSProperties}> = ({pla
                 width: '100%',
                 height: '100%',
                 objectFit: 'cover',
+                objectPosition: plan.facePos ?? '50% 50%',
+                transformOrigin: plan.facePos ?? '50% 50%',
                 transform: `scale(${plan.faceZoom})`,
               }}
             />

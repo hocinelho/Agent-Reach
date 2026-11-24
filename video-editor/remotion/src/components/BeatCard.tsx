@@ -74,6 +74,7 @@ export const BeatCard: React.FC<{beat: Beat; plan: Plan}> = ({beat, plan}) => {
     padding: '0 70px',
     opacity: out.opacity,
     filter: out.filter,
+    direction: plan.cardRtl ? 'rtl' : 'ltr',
   };
   const items = beat.items ?? [];
 
@@ -235,10 +236,12 @@ export const HookOverlay: React.FC<{beat: Beat; plan: Plan}> = ({beat, plan}) =>
             padding: '10px 26px',
             borderRadius: 999,
             border: `2px solid ${th.accent}`,
-            background: 'rgba(0,0,0,0.45)',
+            background: th.card,
             fontFamily: th.fontMono,
-            fontSize: 30,
+            fontSize: 34,
+            fontWeight: 700,
             color: th.text,
+            boxShadow: '0 8px 30px rgba(0,0,0,0.25)',
           }}
         >
           {beat.subtitle}

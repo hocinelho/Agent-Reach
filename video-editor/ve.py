@@ -238,6 +238,8 @@ def cmd_build(a) -> None:
         "musicVolume": edit.get("musicVolume", 0.08),
         "sfxVolume": edit.get("sfxVolume", 0.5),
         "faceZoom": edit.get("faceZoom", 1.0),
+        "facePos": edit.get("facePos", "50% 50%"),
+        "cardRtl": edit.get("cardRtl", False),
     }
     if rtl and props["theme"].get("fontBody") == "Inter":
         props["theme"]["fontBody"] = "Cairo"

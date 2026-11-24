@@ -1,0 +1,20 @@
+{
+  "name": "warm-kitchen",
+  "bg": "#FBF1EE",
+  "bg2": "#F5E1DA",
+  "accent": "#D9577A",
+  "text": "#3A2A2E",
+  "muted": "#9C8489",
+  "card": "#FFFFFF",
+  "cardBorder": "rgba(217,87,122,0.22)",
+  "captionBg": "#FFFFFF",
+  "captionText": "#3A2A2E",
+  "captionHighlight": "#D9577A",
+  "fontDisplay": "Cairo",
+  "fontBody": "Cairo",
+  "fontMono": "Cairo",
+  "displayItalic": false,
+  "stepLabel": "خطوة",
+  "radius": 28,
+  "glow": false
+}

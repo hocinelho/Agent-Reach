@@ -69,6 +69,10 @@ Editing rules (copied from pro reels; break them only for a reason):
 - `highlight`: 5–15 keywords **exactly as spelled in the transcript**, drawn in the accent colour.
 - Fix obvious transcription errors in names by adding `"words"` (a copy of timeline words with fixes)
   only if they matter; otherwise leave the words alone.
+- Arabic card text → `"cardRtl": true` with the `warm-kitchen` theme (or any theme whose fonts are Cairo).
+- Face high in the frame (phone on the counter, filmed from below) → `"facePos": "50% 22%"` so the
+  split layout keeps the face rather than the chest.
+- Fix Whisper's spelling of key words in captions with a `words` copy (e.g. ساروخ→صاروخ); keep timings.
 - Optional: `music` (file under `remotion/public/`), `musicVolume` 0.05–0.12, `sfxVolume`, `faceZoom`
   (1.1–1.3 if the face is small in frame), `fps` 60 for smoother motion, `beat.sfx` to override or
   `null` to mute one beat. SFX by default: riser on hook, whoosh on new step, ding on stat/cta, pop otherwise.
