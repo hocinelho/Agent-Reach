@@ -5,3 +5,4 @@ remotion/public/projects/
 remotion/out/
 __pycache__/
 hyperframes/node_modules/
+**/.hyperframes/
