@@ -1,0 +1,20 @@
+{
+  "name": "neon-bold",
+  "bg": "#07070A",
+  "bg2": "#0E1014",
+  "accent": "#D4FF3A",
+  "text": "#FFFFFF",
+  "muted": "#7C808A",
+  "card": "rgba(22,24,30,0.95)",
+  "cardBorder": "rgba(212,255,58,0.25)",
+  "captionBg": "#D4FF3A",
+  "captionText": "#07070A",
+  "captionHighlight": "#7A2CFF",
+  "fontDisplay": "Inter",
+  "fontBody": "Inter",
+  "fontMono": "JetBrains Mono",
+  "displayItalic": false,
+  "stepLabel": "STEP",
+  "radius": 14,
+  "glow": true
+}

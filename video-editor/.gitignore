@@ -1,0 +1,8 @@
+projects/*
+!projects/.gitkeep
+remotion/node_modules/
+remotion/public/projects/
+remotion/out/
+__pycache__/
+hyperframes/node_modules/
+**/.hyperframes/

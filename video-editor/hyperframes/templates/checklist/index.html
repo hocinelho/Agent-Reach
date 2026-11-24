@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1036" />
+    <script src="assets/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: Cairo; font-weight: 900; src: url(assets/fonts/cairo-arabic-900-normal.woff2) format("woff2"); }
+      @font-face { font-family: Cairo; font-weight: 900; src: url(assets/fonts/cairo-latin-900-normal.woff2) format("woff2"); unicode-range: U+0000-00FF; }
+      @font-face { font-family: Cairo; font-weight: 700; src: url(assets/fonts/cairo-arabic-700-normal.woff2) format("woff2"); }
+      @font-face { font-family: Inter; font-weight: 700; src: url(assets/fonts/inter-latin-700-normal.woff2) format("woff2"); }
+      @font-face { font-family: Mono; src: url(assets/fonts/jetbrains-mono-latin-500-normal.woff2) format("woff2"); }
+      :root {
+        --accent: #CF6F56; --text: #F6F6EC; --muted: #8A877F;
+        --card: rgba(40, 28, 24, 0.92); --border: rgba(207, 111, 86, 0.35);
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1036px; overflow: hidden; background: transparent; }
+      #root { position: relative; width: 100%; height: 100%; padding: 140px 80px 60px; /* top 140: room for the STEP bar */ color: var(--text); }
+      .t1 { font: 900 96px/1.1 Cairo; }
+      .t2 { font: 900 96px/1.15 Cairo; color: var(--accent); }
+      .count { font: 500 30px Mono; color: var(--accent); margin: 44px 0 18px; direction: ltr; text-align: left; }
+      .rows { display: flex; flex-direction: column; gap: 16px; direction: ltr; }
+      .row { display: flex; align-items: center; gap: 22px; height: 84px; padding: 0 26px;
+             background: var(--card); border: 2px solid var(--border); border-radius: 20px; }
+      .check { width: 44px; height: 44px; border-radius: 50%; border: 3px solid var(--muted);
+               display: grid; place-items: center; font: 700 26px Inter; color: transparent; }
+      .name { font: 700 40px Inter; }
+      .role { margin-left: auto; font: 700 32px Cairo; color: var(--muted); direction: rtl; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="6" data-width="1080" data-height="1036">
+      <div class="clip" data-start="0" data-duration="6" data-track-index="0">
+        <div class="t1" id="t1">خمس أدوات.</div>
+        <div class="t2" id="t2">وكل وحدة لها دور.</div>
+        <div class="count" id="count">0/5</div>
+        <div class="rows">
+          <div class="row"><div class="check">✓</div><div class="name">Remotion</div><div class="role">بناء الفيديو</div></div>
+          <div class="row"><div class="check">✓</div><div class="name">HyperFrames</div><div class="role">الموشن جرافيك</div></div>
+          <div class="row"><div class="check">✓</div><div class="name">FFmpeg</div><div class="role">التحرير</div></div>
+          <div class="row"><div class="check">✓</div><div class="name">Whisper</div><div class="role">الترجمة التلقائية</div></div>
+          <div class="row"><div class="check">✓</div><div class="name">yt-dlp</div><div class="role">تحميل المراجع</div></div>
+        </div>
+      </div>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const ease = "power4.out";
+      tl.fromTo("#t1", { opacity: 0, y: 30, filter: "blur(8px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.35, ease }, 0);
+      tl.fromTo("#t2", { opacity: 0, y: 30, filter: "blur(8px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.35, ease }, 0.25);
+      tl.fromTo("#count", { opacity: 0 }, { opacity: 1, duration: 0.2 }, 0.5);
+      const rows = gsap.utils.toArray(".row");
+      rows.forEach((row, i) => {
+        const at = 0.7 + i * 0.55;
+        tl.fromTo(row, { opacity: 0, x: -60, filter: "blur(6px)" }, { opacity: 1, x: 0, filter: "blur(0px)", duration: 0.3, ease }, at);
+        const chk = row.querySelector(".check");
+        tl.to(chk, { backgroundColor: "#CF6F56", borderColor: "#CF6F56", color: "#1A1210", scale: 1.15, duration: 0.15, ease: "back.out(3)" }, at + 0.3);
+        tl.to(chk, { scale: 1, duration: 0.15 }, at + 0.45);
+        tl.to(row, { borderColor: "#CF6F56", boxShadow: "0 0 40px rgba(207,111,86,0.35)", duration: 0.2 }, at + 0.3);
+        if (i > 0) tl.to(rows[i - 1], { boxShadow: "0 0 0 rgba(0,0,0,0)", borderColor: "rgba(207,111,86,0.35)", duration: 0.2 }, at + 0.3);
+        tl.set("#count", { textContent: `${i + 1}/5` }, at + 0.3);
+      });
+      tl.to("#root", { opacity: 0, filter: "blur(6px)", duration: 0.25 }, 5.75);
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

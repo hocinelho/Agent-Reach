@@ -1,0 +1,20 @@
+{
+  "name": "terracotta-dark",
+  "bg": "#1A1210",
+  "bg2": "#2A1913",
+  "accent": "#CF6F56",
+  "text": "#F6F6EC",
+  "muted": "#8A877F",
+  "card": "rgba(40,28,24,0.92)",
+  "cardBorder": "rgba(207,111,86,0.35)",
+  "captionBg": "rgba(28,22,20,0.88)",
+  "captionText": "#F6F6EC",
+  "captionHighlight": "#CF6F56",
+  "fontDisplay": "Instrument Serif",
+  "fontBody": "Inter",
+  "fontMono": "JetBrains Mono",
+  "displayItalic": true,
+  "stepLabel": "STEP",
+  "radius": 22,
+  "glow": true
+}

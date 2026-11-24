@@ -1,0 +1,20 @@
+{
+  "name": "clean-light",
+  "bg": "#F6F6EC",
+  "bg2": "#EFEDE3",
+  "accent": "#2F5BFF",
+  "text": "#1C1B18",
+  "muted": "#8A877F",
+  "card": "#FFFFFF",
+  "cardBorder": "rgba(28,27,24,0.10)",
+  "captionBg": "#FFFFFF",
+  "captionText": "#1C1B18",
+  "captionHighlight": "#2F5BFF",
+  "fontDisplay": "Instrument Serif",
+  "fontBody": "Inter",
+  "fontMono": "JetBrains Mono",
+  "displayItalic": true,
+  "stepLabel": "STEP",
+  "radius": 26,
+  "glow": false
+}

@@ -1,0 +1,9 @@
+{
+  "name": "video-editor-hyperframes",
+  "private": true,
+  "description": "HyperFrames (HTML + GSAP) motion-graphic scenes, rendered with alpha and composited by ../remotion",
+  "dependencies": {
+    "gsap": "3.13.0",
+    "hyperframes": "0.9.27"
+  }
+}
